@@ -1,13 +1,15 @@
-Package: SelfComplexityPackage
-Title: What the Package Does (One Line, Title Case)
+Package: selfcomplexity
+Title: Calculate Indices for Self-complexity Measures
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Kasia",
+           family = "Banas",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "kasia.banas@gmail.com",
+           comment = c(ORCID = "0000-0002-2704-5087"))
+Description: Literature on self-complexity uses a variety of indices to calculate how complex, 
+or consistent, people's selves are. This package offers functions that automate the calculation
+of the most frequently used indices, including Overlap, H-index, etc.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8

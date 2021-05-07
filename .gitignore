@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.DS_Store
 
 ## ignore files in the test_data folder
 test_data/

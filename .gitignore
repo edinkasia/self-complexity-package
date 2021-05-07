@@ -1,3 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
+
+## ignore files in the test_data folder
+test_data/

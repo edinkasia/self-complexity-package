@@ -2,17 +2,18 @@ Package: selfcomplexity
 Title: Calculate Indices for Self-complexity Measures
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Kasia",
-           family = "Banas",
+    person("Kasia", "Banas",
            role = c("aut", "cre"),
            email = "kasia.banas@gmail.com",
            comment = c(ORCID = "0000-0002-2704-5087"))
 Description: Literature on self-complexity uses a variety of indices to calculate how complex, 
-or consistent, people's selves are. This package offers functions that automate the calculation
-of the most frequently used indices, including Overlap, H-index, etc.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+    or consistent, people's selves are. This package offers functions that automate the calculation
+    of the most frequently used indices, including Overlap, H-index, etc.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    magrittr,
+    dplyr

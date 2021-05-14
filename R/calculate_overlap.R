@@ -1,4 +1,5 @@
 ### This is a calculation of overlap scores by Gustaf Rydevik
+### The key function is calculate_overlap
 
 calculate_OL<-function(a1,a2){
   overlap<-sum(a1%in%a2)/length(a1)
@@ -20,6 +21,18 @@ overlap_data<-split_data%>%full_join(split_data,by=c("ResponseId"))%>%
 
 return(overlap_data)
 }
+
+#' Calculate overlap index
+#'
+#' @param subject_df
+#' @param na.name.rm
+#'
+#' @return dataframe
+#' @export
+#'
+#' @examples
+#' calculate_overlap(example_data, na.name.rm = TRUE)
+
 
 calculate_overlap <- function(subject_df, na.name.rm = TRUE){
   overlap_df <- create_overlap_df(subject_df, na.name.rm = na.name.rm)

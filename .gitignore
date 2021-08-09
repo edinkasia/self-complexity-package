@@ -5,3 +5,5 @@
 
 ## ignore files in the test_data folder
 test_data/
+## ignore paper drafts
+paper_drafts/

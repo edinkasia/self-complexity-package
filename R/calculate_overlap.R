@@ -1,4 +1,3 @@
-### This is a calculation of overlap scores by Gustaf Rydevik
 ### The key function is calculate_overlap
 
 calculate_OL<-function(a1,a2){

@@ -1,4 +1,5 @@
-### The key function is calculate_overlap
+### The key function is calculate_overlap (at the bottom)
+### The other functions prepare the data and set up the necessary operations
 
 calculate_OL<-function(a1,a2){
   overlap<-sum(a1%in%a2)/length(a1)
@@ -10,9 +11,9 @@ create_overlap_df <- function(subject_df, na.name.rm = TRUE) {
   dplyr::mutate(attr=stringr::str_split(Attributes,","))%>%
   dplyr::select(ResponseId, Subtype, Name, attr)
 
-overlap_data<-split_data%>%dplyr::full_join(split_data,by=c("ResponseId"))%>%
-  dplyr::mutate(overlap=purrr::map2_dbl(attr.x,attr.y,calculate_OL
-  ))%>%
+overlap_data<-split_data%>%
+  dplyr::full_join(split_data,by=c("ResponseId"))%>%
+  dplyr::mutate(overlap=purrr::map2_dbl(attr.x,attr.y,calculate_OL))%>%
   dplyr::filter(Subtype.x!=Subtype.y)%>%
   dplyr::filter(!rlang::is_empty(attr.x)|!rlang::is_empty(attr.y)) %>% # overlap between two empty lists equals 1, so we filter them out here
   dplyr::group_by(ResponseId) %>%
@@ -31,12 +32,14 @@ return(overlap_data)
 #' @export
 #'
 #' @examples
-#' calculate_overlap(example_data, na.name.rm = TRUE)
+#' calculate_overlap(complexity_data, na.name.rm = TRUE)
 
 
 calculate_overlap <- function(subject_df, na.name.rm = TRUE){
   overlap_df <- create_overlap_df(subject_df, na.name.rm = na.name.rm)
-  overlap_res <- overlap_df%>%dplyr::select(ResponseId,overlap_norm)%>%unique()
+  overlap_res <- overlap_df%>%
+    dplyr::select(ResponseId,overlap_norm)%>%
+    unique()
   return(overlap_res)
 }
 

@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-^\.lintr\.R$
+^\.lintr$
+^NEWS\.md$

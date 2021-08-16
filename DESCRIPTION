@@ -1,6 +1,6 @@
 Package: selfcomplexity
 Title: Calculate Indices for Self-complexity Measures
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     person(given = "Kasia",
            family = "Banas",

@@ -24,7 +24,8 @@ jobs:
           remotes::install_github("jumpingrivers/inteRgrate")
         shell: Rscript {0}
 
-      - name: Lint
+      - name: Checks
         run: |
-          inteRgrate::check_lint()
+          inteRgrate::check_all()
+        shell: Rscript {0}
 

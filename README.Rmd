@@ -35,9 +35,9 @@ Use the `calculate_overlap()` function to create a dataframe with overlap scores
 
 ```{r example}
 library(selfcomplexity)
-data <- readr::read_csv("test_data/AllData_SelfAspects_LongFormat.csv")
-overlap <- calculate_overlap(data)
-utils::View(overlap)
+data(complexity_data, package = "selfcomplexity")
+overlap <- calculate_overlap(complexity_data)
+head(overlap)
 ```
 
 

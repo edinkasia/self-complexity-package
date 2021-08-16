@@ -24,10 +24,11 @@ Literature on self-complexity uses a variety of indices to calculate how complex
 
 You can install the released version of selfcomplexity from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
+```{r, eval = FALSE}
+install.packages("devtools")
 devtools::install_github("edinkasia/self-complexity-package")
 ```
+
 ## Quick demo
 
 Use the `calculate_overlap()` function to create a dataframe with overlap scores for an example dataset:

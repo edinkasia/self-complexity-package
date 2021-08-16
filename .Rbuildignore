@@ -4,3 +4,4 @@
 ^README\.Rmd$
 ^\.lintr$
 ^NEWS\.md$
+^\.github

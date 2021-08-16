@@ -1,0 +1,30 @@
+on:
+  push:
+    - '*'
+  pull_request:
+    - master
+
+name: inteRgrate checks
+
+jobs:
+  intergrate:
+    runs-on: ubuntu 20-04
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v1
+        id: install-r
+
+      - name: Add dependencies
+        run: |
+          install.packages("remotes")
+          remotes::install_github("jumpingrivers/inteRgrate")
+        shell: Rscript {0}
+
+      - name: Lint
+        run: |
+          inteRgrate::check_lint()
+

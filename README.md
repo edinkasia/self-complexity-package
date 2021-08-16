@@ -4,6 +4,8 @@
 # selfcomplexity
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/edinkasia/self-complexity-package/workflows/R-CMD-check/badge.svg)](https://github.com/edinkasia/self-complexity-package/actions)
 <!-- badges: end -->
 
 Literature on self-complexity uses a variety of indices to calculate how

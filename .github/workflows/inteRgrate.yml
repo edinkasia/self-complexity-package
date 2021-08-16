@@ -20,6 +20,11 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         id: install-r
 
+      - name: Install Sys deps
+        run: |
+          sudo apt update
+          sudo apt install -y libcurl4-openssl-dev
+
       - name: Add dependencies
         run: |
           install.packages("remotes")

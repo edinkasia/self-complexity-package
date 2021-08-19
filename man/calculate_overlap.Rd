@@ -16,5 +16,5 @@ dataframe
 Calculate overlap index
 }
 \examples{
-calculate_overlap(example_data, na.name.rm = TRUE)
+calculate_overlap(complexity_data, na.name.rm = TRUE)
 }

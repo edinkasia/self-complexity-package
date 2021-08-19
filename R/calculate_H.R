@@ -2,10 +2,22 @@
 #'
 #' @param x factor
 #'
-#' @return A tibble
+#' @return A tibbleA
+#' @importFrom rlang .data
 #' @export
 #' @examples
-#' fcount(iris$Species)
+#' All_Attributes <- c("Capable", "Comfortable", "Communicative", "Confident", "Disagreeing",
+#' "Disorganised",
+#' "Energetic", "Friendly", "Fun and Entertaining", "Giving", "Happy", "Hardworking",
+#' "Hopeless", "Immature", "Incompetent", "Indecisive", "Independent", "Inferior",
+#' "Insecure", "Intelligent", "Interested", "Irresponsible", "Irritable", "Isolated",
+#' "Lazy", "Like a failure", "Lovable", "Mature", "Needed", "Optimistic", "Organised",
+#' "Outgoing", "Sad and Blue", "Self-centered", "Successful", "Tense", "Uncomfortable",
+#'"Unloved", "Weary", "Worthless")
+#'
+#' calculate_H(complexity_data, att_column = "Attributes", id_column = "ResponseId",
+#' vector = All_Attributes)
+
 
 
 calculate_H <- function(data, att_column, id_column, vector) {
@@ -15,17 +27,17 @@ calculate_H <- function(data, att_column, id_column, vector) {
   hashed_data <- vector %>%
     purrr::map(~stringr::str_detect(data[[att_column]], .x))%>%
     purrr::set_names(nm = vector) %>%
-    dplyr::bind_cols(data, .) %>%
+    dplyr::bind_cols(data, .data) %>%
     dplyr::group_by(!!!id_col) %>%
     dplyr::mutate(power=2^(0:(dplyr::n()-1))) %>%
-    dplyr::mutate(across(all_of(vector),~.*power)) %>%
-    dplyr::summarise(across(all_of(vector),sum)) %>%
-    tidyr::pivot_longer(cols=all_of(vector)) %>%
+    dplyr::mutate(dplyr::across(dplyr::all_of(vector),~.*power)) %>%
+    dplyr::summarise(dplyr::across(dplyr::all_of(vector),sum)) %>%
+    tidyr::pivot_longer(cols=dplyr::all_of(vector)) %>%
     dplyr::group_by(!!!id_col) %>%
-    dplyr::count(value) %>%
+    dplyr::count(.data$value) %>%
     dplyr::group_by(!!!id_col) %>%
     dplyr::summarise(H_index = log2(length(vector)) -
-                (sum(n*log2(n))/length(vector)))
+                (sum(.data$n*log2(.data$n))/length(vector)))
 
   return(hashed_data)
 }

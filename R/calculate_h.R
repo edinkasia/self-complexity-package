@@ -53,17 +53,26 @@ calculate_H <- #nolint
     purrr::map(~stringr::str_detect(data[[att_column]], .x)) %>%
     purrr::set_names(nm = vector) %>%
     dplyr::bind_cols(data, .) %>%
-    dplyr::group_by(!!!id_col) %>%
-    dplyr::mutate(power = 2^ (0:(dplyr::n() - 1))) %>%
-    dplyr::mutate(across(all_of(vector), ~. * power)) %>%
-    dplyr::summarise(across(all_of(vector), sum)) %>%
-    tidyr::pivot_longer(cols = all_of(vector)) %>%
-    dplyr::group_by(!!!id_col) %>%
-    dplyr::count(value) %>%
     # dplyr::group_by(!!!id_col) %>%
+    dplyr::mutate(power = 2^ (0:(dplyr::n() - 1))) %>%
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::all_of(vector),
+         ~. * power
+        )
+    ) %>%
+    dplyr::summarise(
+      dplyr::across(
+        tidyselect::all_of(vector),
+        sum
+      )
+    ) %>%
+    tidyr::pivot_longer(cols = tidyselect::all_of(vector)) %>%
+    dplyr::group_by(!!!id_col) %>%
+    dplyr::count(.data$value) %>%
     dplyr::summarise(
       H_index = log2(length(vector)) -
-        (sum(n * log2(n)) / length(vector))
+        (sum(n * log2(.data$n)) / length(vector))
     )
 
   return(hashed_data)

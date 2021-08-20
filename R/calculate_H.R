@@ -2,7 +2,7 @@
 #'
 #' @param x factor
 #'
-#' @return A tibbleA
+#' @return A tibble
 #' @importFrom rlang .data
 #' @export
 #' @examples

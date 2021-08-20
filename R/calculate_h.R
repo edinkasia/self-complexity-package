@@ -60,7 +60,7 @@ calculate_H <- #nolint
     tidyr::pivot_longer(cols = all_of(vector)) %>%
     dplyr::group_by(!!!id_col) %>%
     dplyr::count(value) %>%
-    dplyr::group_by(!!!id_col) %>%
+    # dplyr::group_by(!!!id_col) %>%
     dplyr::summarise(
       H_index = log2(length(vector)) -
         (sum(n * log2(n)) / length(vector))

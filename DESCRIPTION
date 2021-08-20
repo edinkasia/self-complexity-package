@@ -20,7 +20,18 @@ Imports:
     purrr,
     readr,
     stringr
+
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+
+Imports: 
+    magrittr,
+    dplyr,
+    readr,
+    stringr,
+    purrr,
+    rlang
+Depends: 
+    R (>= 2.10)

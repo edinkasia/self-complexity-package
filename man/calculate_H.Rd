@@ -16,5 +16,16 @@ A tibble
 Calculate the H index of self-complexity (dimensionality measure)
 }
 \examples{
-fcount(iris$Species)
+
+All_Attributes <- c("Capable", "Comfortable", "Communicative", "Confident", "Disagreeing",
+"Disorganised",
+"Energetic", "Friendly", "Fun and Entertaining", "Giving", "Happy", "Hardworking",
+"Hopeless", "Immature", "Incompetent", "Indecisive", "Independent", "Inferior",
+"Insecure", "Intelligent", "Interested", "Irresponsible", "Irritable", "Isolated",
+"Lazy", "Like a failure", "Lovable", "Mature", "Needed", "Optimistic", "Organised",
+"Outgoing", "Sad and Blue", "Self-centered", "Successful", "Tense", "Uncomfortable",
+"Unloved", "Weary", "Worthless")
+
+calculate_H(complexity_data, att_column = "Attributes", id_column = "ResponseId",
+vector = All_Attributes)
 }

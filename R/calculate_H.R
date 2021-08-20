@@ -27,7 +27,7 @@ calculate_H <- function(data, att_column, id_column, vector) {
   hashed_data <- vector %>%
     purrr::map(~stringr::str_detect(data[[att_column]], .x))%>%
     purrr::set_names(nm = vector) %>%
-    dplyr::bind_cols(data, .data) %>%
+    dplyr::bind_cols(data, .) %>%
     dplyr::group_by(!!!id_col) %>%
     dplyr::mutate(power=2^(0:(dplyr::n()-1))) %>%
     dplyr::mutate(dplyr::across(dplyr::all_of(vector),~.*power)) %>%
@@ -47,3 +47,6 @@ calculate_H <- function(data, att_column, id_column, vector) {
 
 # One option to add would be to have an argument that specifies whether the Attributes are already spread wide (which they might be, from Qualtrics).
 # This would make life easier, as we could skip the first 3 lines of the function.
+
+
+

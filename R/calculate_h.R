@@ -1,20 +1,54 @@
 #' Calculate the H index of self-complexity (dimensionality measure)
 #'
-#' @param x factor
+#' Longer description
 #'
+#' @param data A data.frame like object, see details for more information
+#' @param att_column unquoted variable name of a single column. See details for
+#' structure of this variable.
+#' @param id_column unquoted variable name of a single column. The partipants unique
+#' identifier
+#' @param vector character vector of all attributes.
 #' @return A tibble
+#' @details
+#' Further details on some of the arguments is given below.
+#' \itemize{
+#'  \item{"data"}{
+#'    The expectation is that we have tidy, long format data. Each
+#'    participant has a unique identifier, described by the id_column
+#'    argument. There may be several observations for single participants
+#'    in which case they represent different subtypes. It may be convenient
+#'    to keep the subtype identification column in the data but it is not required
+#'    for the purpose of this calculation.
+#'  }
+#'  \item{"att_column"}{
+#'    At present we expect a column where each observation is a single,
+#'    comma separated, character value of multiple adjectives, e.g
+#'    "Comfortable,Disorganised,Interested,Irresponsible"
+#'  }
+#' }
 #' @export
 #' @examples
-#' fcount(iris$Species)
-
-
+#' library(selfcomplexity)
+#' data(complexity_data, package = "selfcomplexity")
+#' all_attributes = extract_unique_attributes(
+#'  complexity_data$Attributes
+#' ) %>%
+#'   trim_na()
+#' calculate_H(complexity_data, Attributes, ResponseId, all_attributes)
 calculate_H <- #nolint
   function(data, att_column, id_column, vector) {
 
   # creates a symbol from the string input
   # (needed to use this column name in further operations)
   id_col <- rlang::ensyms(id_column)
+  att_quo <- rlang::ensym(att_column)
 
+  # sanity checks
+  check_input_data(data)
+  check_columns_exist(data, !!!id_col, !!att_quo)
+
+  # extract the string label for att_column
+  att_column <- rlang::as_label(att_quo)
   hashed_data <- vector %>%
     purrr::map(~stringr::str_detect(data[[att_column]], .x)) %>%
     purrr::set_names(nm = vector) %>%

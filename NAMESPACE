@@ -3,4 +3,6 @@
 export("%>%")
 export(calculate_H)
 export(calculate_overlap)
+export(extract_unique_attributes)
+export(trim_na)
 importFrom(magrittr,"%>%")

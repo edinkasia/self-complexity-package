@@ -1,6 +1,6 @@
 Package: selfcomplexity
 Title: Calculate Indices for Self-complexity Measures
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     person(given = "Kasia",
            family = "Banas",
@@ -15,12 +15,19 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
 Imports: 
+    assertthat,
     dplyr,
+    glue,
     magrittr,
     purrr,
     readr,
-    stringr
+    rlang,
+    stringr,
+    tidyr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

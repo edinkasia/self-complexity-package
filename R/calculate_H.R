@@ -39,6 +39,7 @@ calculate_H <- function(data, att_column, id_column, vector) {
     dplyr::summarise(H_index = log2(length(vector)) -
                 (sum(.data$n*log2(.data$n))/length(vector)))
 
+
   return(hashed_data)
 }
 

@@ -16,6 +16,7 @@ A tibble
 Calculate the H index of self-complexity (dimensionality measure)
 }
 \examples{
+
 All_Attributes <- c("Capable", "Comfortable", "Communicative", "Confident", "Disagreeing",
 "Disorganised",
 "Energetic", "Friendly", "Fun and Entertaining", "Giving", "Happy", "Hardworking",

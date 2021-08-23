@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # selfcomplexity
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/edinkasia/self-complexity-package/workflows/R-CMD-check/badge.svg)](https://github.com/edinkasia/self-complexity-package/actions)
 <!-- badges: end -->
 
 Literature on self-complexity uses a variety of indices to calculate how complex, or consistent, people's selves are. This package offers functions that automate the calculation of the most frequently used indices, including Overlap, H-index, etc.
@@ -24,19 +25,20 @@ Literature on self-complexity uses a variety of indices to calculate how complex
 
 You can install the released version of selfcomplexity from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
+```{r, eval = FALSE}
+install.packages("devtools")
 devtools::install_github("edinkasia/self-complexity-package")
 ```
+
 ## Quick demo
 
 Use the `calculate_overlap()` function to create a dataframe with overlap scores for an example dataset:
 
 ```{r example}
 library(selfcomplexity)
-data <- readr::read_csv("test_data/AllData_SelfAspects_LongFormat.csv")
-overlap <- calculate_overlap(data)
-utils::View(overlap)
+data(complexity_data, package = "selfcomplexity")
+overlap <- calculate_overlap(complexity_data)
+head(overlap)
 ```
 
 

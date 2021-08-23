@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - master
+
+name: inteRgrate checks
+
+jobs:
+  intergrate:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v1
+        id: install-r
+
+      - name: Install Sys deps
+        run: |
+          sudo apt update
+          sudo apt install -y libcurl4-openssl-dev
+
+      - name: Add dependencies
+        run: |
+          install.packages("remotes")
+          remotes::install_github("jumpingrivers/inteRgrate", auth_token = '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')
+        shell: Rscript {0}
+
+      - name: Checks
+        run: |
+          inteRgrate::check_all()
+        shell: Rscript {0}
+

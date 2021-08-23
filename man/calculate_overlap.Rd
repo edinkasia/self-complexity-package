@@ -4,10 +4,10 @@
 \alias{calculate_overlap}
 \title{Calculate overlap index}
 \usage{
-calculate_overlap(subject_df, na.name.rm = TRUE)
+calculate_overlap(subject_df, na_name_rm = TRUE)
 }
 \arguments{
-\item{na.name.rm}{}
+\item{na_name_rm}{}
 }
 \value{
 dataframe

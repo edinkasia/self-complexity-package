@@ -6,6 +6,7 @@ calculate_ol <- function(a1, a2) {
   return(overlap)
 }
 
+#' @importFrom rlang .data
 create_overlap_df <- function(data, att_column, id_column, subtype_column,
                               na_name_rm = TRUE) {
   . <- NULL
@@ -19,6 +20,10 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
   check_input_data(data)
   check_columns_exist(data, !!!id_col, !!att_quo)
 
+  # labels for the subtype filter
+  sx = paste0(subtype_column, ".x")
+  sy = paste0(subtype_column, ".y")
+
   split_data <- data %>% {
     if (na_name_rm) dplyr::filter(data, !is.na(data[[subtype_column]])) else .
   } %>%
@@ -28,17 +33,17 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
 
   overlap_data <- split_data %>%
     dplyr::full_join(split_data, by = c(id_column)) %>%
-    dplyr::mutate(overlap = purrr::map2_dbl(attr.x, attr.y, calculate_ol)) %>%
-    dplyr::filter(Subtype.x != Subtype.y) %>%
+    dplyr::mutate(overlap = purrr::map2_dbl(.data$attr.x, .data$attr.y, calculate_ol)) %>%
+    dplyr::filter(.data[[sx]] != .data[[sy]]) %>%
     # overlap between two empty lists equals 1, so we filter them out here
     dplyr::filter(
-      !rlang::is_empty(attr.x) | !rlang::is_empty(attr.y)
+      !rlang::is_empty(.data$attr.x) | !rlang::is_empty(.data$attr.y)
     ) %>%
     dplyr::group_by(!!!id_col) %>%
     dplyr::mutate(
-      overlap_norm = sum(overlap) /
-        ((dplyr::n_distinct(Subtype.x)) *
-           (dplyr::n_distinct(Subtype.x) - 1))
+      overlap_norm = sum(.data$overlap) /
+        ((dplyr::n_distinct(.data[[sx]])) *
+           (dplyr::n_distinct(.data[[sx]]) - 1))
     )
 
   return(overlap_data)

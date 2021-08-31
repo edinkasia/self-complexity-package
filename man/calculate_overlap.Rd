@@ -4,17 +4,22 @@
 \alias{calculate_overlap}
 \title{Calculate overlap index}
 \usage{
-calculate_overlap(subject_df, na_name_rm = TRUE)
+calculate_overlap(data, na_name_rm = TRUE)
 }
 \arguments{
-\item{na_name_rm}{}
+\item{data}{A data.frame like object, see details for more information}
+
+\item{na_name_rm}{Boolean variable to determine whether empty aspect names
+should be removed}
 }
 \value{
-dataframe
+A tibble
 }
 \description{
 Calculate overlap index
 }
 \examples{
+library(selfcomplexity)
+data(complexity_data, package = "selfcomplexity")
 calculate_overlap(complexity_data, na_name_rm = TRUE)
 }

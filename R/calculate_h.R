@@ -53,7 +53,7 @@ calculate_H <- #nolint
     purrr::map(~stringr::str_detect(data[[att_column]], .x)) %>%
     purrr::set_names(nm = vector) %>%
     dplyr::bind_cols(data, .) %>%
-    # dplyr::group_by(!!!id_col) %>%
+    dplyr::group_by(!!!id_col) %>%
     dplyr::mutate(power = 2^ (0:(dplyr::n() - 1))) %>%
     dplyr::mutate(
       dplyr::across(

@@ -1,4 +1,4 @@
-# selfcomplexity 0.0.2 _2021-08-20_
+# selfcomplexity 0.0.3 _2021-08-20_
 
   * Update args for `calculate_H` such that both can be used
   either quoted or unquoted

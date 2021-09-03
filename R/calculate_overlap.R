@@ -13,12 +13,12 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
 
   # creates a symbol from the string input
   # (needed to use this column name in further operations)
-  id_col <- rlang::ensyms(id_column)
+  id_col <- rlang::ensym(id_column)
   att_quo <- rlang::ensym(att_column)
 
-  # sanity checks
-  check_input_data(data)
-  check_columns_exist(data, !!!id_col, !!att_quo)
+  # # sanity checks - throwing an error
+  # check_input_data(data)
+  # check_columns_exist(data, !!id_col, !!att_quo)
 
   # labels for the subtype filter
   sx = paste0(subtype_column, ".x")
@@ -29,17 +29,16 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
   } %>%
     dplyr::mutate(attr = stringr::str_split(!!att_quo, ",")) %>%
     dplyr::select(id_column, subtype_column, attr)
-### function updated with general arguments up to this point
 
   overlap_data <- split_data %>%
-    dplyr::full_join(split_data, by = c(id_column)) %>%
+    dplyr::full_join(split_data, by = id_column) %>%
     dplyr::mutate(overlap = purrr::map2_dbl(.data$attr.x, .data$attr.y, calculate_ol)) %>%
     dplyr::filter(.data[[sx]] != .data[[sy]]) %>%
     # overlap between two empty lists equals 1, so we filter them out here
     dplyr::filter(
       !rlang::is_empty(.data$attr.x) | !rlang::is_empty(.data$attr.y)
     ) %>%
-    dplyr::group_by(!!!id_col) %>%
+    dplyr::group_by(!!id_col) %>%
     dplyr::mutate(
       overlap_norm = sum(.data$overlap) /
         ((dplyr::n_distinct(.data[[sx]])) *
@@ -52,8 +51,14 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
 #' Calculate overlap index
 #'
 #' @param data A data.frame like object, see details for more information
+#' @param att_column unquoted variable name of a single column. See details for
+#' structure of this variable.
+#' @param id_column unquoted variable name of a single column. The participant's unique
+#' identifier.
+#' @param subtype_column unquoted variable name of a single column. Names of self-aspects
+#' listed by the participants. Rows where this variable is empty are filtered out by default.
 #' @param na_name_rm Boolean variable to determine whether empty aspect names
-#' should be removed
+#' should be removed.
 #'
 #' @return A tibble
 #' @export
@@ -61,13 +66,19 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
 #' @examples
 #' library(selfcomplexity)
 #' data(complexity_data, package = "selfcomplexity")
-#' calculate_overlap(complexity_data, na_name_rm = TRUE)
+#' calculate_overlap(data = complexity_data, att_column = Attributes, id_column = ResponseId,
+#' subtype_column = Name, na_name_rm = TRUE)
 
 
-calculate_overlap <- function(data, na_name_rm = TRUE) {
-  overlap_df <- create_overlap_df(data, na_name_rm = na_name_rm)
+calculate_overlap <- function(data, att_column, id_column, subtype_column,
+                              na_name_rm = TRUE) {
+  overlap_df <- create_overlap_df(data = data, att_column = att_column, id_column = id_column,
+                                  subtype_column = subtype_column, na_name_rm = na_name_rm)
   overlap_res <- overlap_df %>%
-    dplyr::select(ResponseId, overlap_norm) %>%
+    dplyr::select(!!id_col, overlap_norm) %>%
     unique()
   return(overlap_res)
 }
+
+# At this point, the final function doesn't work - I think it has to do with passing arguments
+# from the outside function to the inside one.

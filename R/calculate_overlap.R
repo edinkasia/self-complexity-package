@@ -7,13 +7,18 @@ calculate_ol <- function(a1, a2) {
 }
 
 #' @importFrom rlang .data
-create_overlap_df <- function(data, att_column, id_column, subtype_column,
+create_overlap_df <- function(data,
+                              att_column,
+                              id_column,
+                              subtype_column,
                               na_name_rm = TRUE) {
   . <- NULL
 
   # creates a symbol from the string input
   # (needed to use this column name in further operations)
-  id_col <- rlang::ensym(id_column)
+
+  id_column_as_string <- rlang::as_label(id_column)
+
   att_quo <- rlang::ensym(att_column)
 
   # # sanity checks - throwing an error
@@ -25,25 +30,25 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
   sy = paste0(subtype_column, ".y")
 
   split_data <- data %>% {
-    if (na_name_rm) dplyr::filter(data, !is.na(data[[subtype_column]])) else .
+    if (na_name_rm)
+      dplyr::filter(data,!is.na(data[[subtype_column]]))
+    else
+      .
   } %>%
     dplyr::mutate(attr = stringr::str_split(!!att_quo, ",")) %>%
     dplyr::select(id_column, subtype_column, attr)
 
   overlap_data <- split_data %>%
-    dplyr::full_join(split_data, by = id_column) %>%
+    dplyr::full_join(split_data, by = id_column_as_string) %>%
     dplyr::mutate(overlap = purrr::map2_dbl(.data$attr.x, .data$attr.y, calculate_ol)) %>%
     dplyr::filter(.data[[sx]] != .data[[sy]]) %>%
     # overlap between two empty lists equals 1, so we filter them out here
-    dplyr::filter(
-      !rlang::is_empty(.data$attr.x) | !rlang::is_empty(.data$attr.y)
-    ) %>%
-    dplyr::group_by(!!id_col) %>%
-    dplyr::mutate(
-      overlap_norm = sum(.data$overlap) /
-        ((dplyr::n_distinct(.data[[sx]])) *
-           (dplyr::n_distinct(.data[[sx]]) - 1))
-    )
+    dplyr::filter(!rlang::is_empty(.data$attr.x) |
+                    !rlang::is_empty(.data$attr.y)) %>%
+    dplyr::group_by(!!id_column) %>%
+    dplyr::mutate(overlap_norm = sum(.data$overlap) /
+                    ((dplyr::n_distinct(.data[[sx]])) *
+                       (dplyr::n_distinct(.data[[sx]]) - 1)))
 
   return(overlap_data)
 }
@@ -66,19 +71,40 @@ create_overlap_df <- function(data, att_column, id_column, subtype_column,
 #' @examples
 #' library(selfcomplexity)
 #' data(complexity_data, package = "selfcomplexity")
-#' calculate_overlap(data = complexity_data, att_column = Attributes, id_column = ResponseId,
-#' subtype_column = Name, na_name_rm = TRUE)
+# calculate_overlap(data = complexity_data, att_column = Attributes, id_column = ResponseId,
+# subtype_column = Name, na_name_rm = TRUE)
 
 
-calculate_overlap <- function(data, att_column, id_column, subtype_column,
-                              na_name_rm = TRUE) {
-  overlap_df <- create_overlap_df(data = data, att_column = att_column, id_column = id_column,
-                                  subtype_column = subtype_column, na_name_rm = na_name_rm)
-  overlap_res <- overlap_df %>%
-    dplyr::select(!!id_col, overlap_norm) %>%
-    unique()
-  return(overlap_res)
-}
+
+calculate_overlap <-
+  function(data,
+           att_column,
+           id_column,
+           subtype_column,
+           na_name_rm = TRUE) {
+    id_column_symbol <- rlang::ensym(id_column)
+
+    overlap_df <-
+      create_overlap_df(
+        data = data,
+        att_column = att_column,
+        id_column = id_column_symbol,
+        subtype_column = subtype_column,
+        na_name_rm = na_name_rm
+      )
+
+    overlap_res <- overlap_df %>%
+      dplyr::select(!!id_column_symbol, overlap_norm) %>%
+      unique()
+    return(overlap_res)
+  }
 
 # At this point, the final function doesn't work - I think it has to do with passing arguments
 # from the outside function to the inside one.
+
+
+# note for later:
+# str to symbol:   id_column_symbol <- rlang::ensym(id_column_as_string)
+# symbol to str:   id_column_as_string <- rlang::as_label(id_column_symbol)
+
+#

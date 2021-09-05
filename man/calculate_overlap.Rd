@@ -4,13 +4,28 @@
 \alias{calculate_overlap}
 \title{Calculate overlap index}
 \usage{
-calculate_overlap(data, na_name_rm = TRUE)
+calculate_overlap(
+  data,
+  att_column,
+  id_column,
+  subtype_column,
+  na_name_rm = TRUE
+)
 }
 \arguments{
 \item{data}{A data.frame like object, see details for more information}
 
+\item{att_column}{unquoted variable name of a single column. See details for
+structure of this variable.}
+
+\item{id_column}{unquoted variable name of a single column. The participant's unique
+identifier.}
+
+\item{subtype_column}{unquoted variable name of a single column. Names of self-aspects
+listed by the participants. Rows where this variable is empty are filtered out by default.}
+
 \item{na_name_rm}{Boolean variable to determine whether empty aspect names
-should be removed}
+should be removed.}
 }
 \value{
 A tibble
@@ -21,5 +36,4 @@ Calculate overlap index
 \examples{
 library(selfcomplexity)
 data(complexity_data, package = "selfcomplexity")
-calculate_overlap(complexity_data, na_name_rm = TRUE)
 }

@@ -1,17 +1,9 @@
 
 data("Showers_onesort", package = "selfcomplexity")
-all_attributes <- c(
-  "Capable", "Comfortable", "Communicative", "Confident", "Disagreeing", "Disorganised",
-  "Energetic", "Friendly", "Fun and Entertaining", "Giving", "Happy", "Hardworking",
-  "Hopeless", "Immature", "Incompetent", "Indecisive", "Independent", "Inferior",
-  "Insecure", "Intelligent", "Interested", "Irresponsible", "Irritable", "Isolated",
-  "Lazy", "Like a failure", "Lovable", "Mature", "Needed", "Optimistic", "Organised",
-  "Outgoing", "Sad and Blue", "Self-centered", "Successful", "Tense", "Uncomfortable",
-  "Unloved", "Weary", "Worthless"
-)
+data("Attributes_40", package = "selfcomplexity")
 
 test_that("Calculate H gives correct answer", {
-  res <- calculate_H(simple_example, Attributes, ResponseId, all_attributes)
+  res <- calculate_H(Showers_onesort, "Attributes", "ResponseId", Attributes_40)
   # ensure that there is only one result as expected
   expect_length(res$H_index, 1)
   # ensure the calculated result matches published value

@@ -44,9 +44,6 @@ comma separated, character value of multiple adjectives, e.g
 \examples{
 library(selfcomplexity)
 data(complexity_data, package = "selfcomplexity")
-all_attributes = extract_unique_attributes(
- complexity_data$Attributes
-) \%>\%
-  trim_na()
-calculate_H(complexity_data, Attributes, ResponseId, all_attributes)
+data(Attributes_40, package = "selfcomplexity")
+calculate_H(complexity_data, Attributes, ResponseId, Attributes_40)
 }

@@ -17,13 +17,10 @@ create_overlap_df <- function(data,
   # creates a symbol from the string input
   # (needed to use this column name in further operations)
 
-  id_column_as_string <- rlang::as_label(id_column)
+  id_column_as_symbol <-  into_symbol(id_column)
+  att_column_as_symbol <-  into_symbol(att_column)
 
-  att_quo <- rlang::ensym(att_column)
-
-  # # sanity checks - throwing an error
-  # check_input_data(data)
-  # check_columns_exist(data, !!id_col, !!att_quo)
+  id_column_as_string <- rlang::as_label(id_column_as_symbol)
 
   # labels for the subtype filter
   sx = paste0(subtype_column, ".x")
@@ -35,8 +32,8 @@ create_overlap_df <- function(data,
     else
       .
   } %>%
-    dplyr::mutate(attr = stringr::str_split(!!att_quo, ",")) %>%
-    dplyr::select(id_column, subtype_column, attr)
+    dplyr::mutate(attr = stringr::str_split(!!att_column_as_symbol, ",")) %>%
+    dplyr::select(id_column_as_symbol, subtype_column, attr)
 
   overlap_data <- split_data %>%
     dplyr::full_join(split_data, by = id_column_as_string) %>%
@@ -45,7 +42,7 @@ create_overlap_df <- function(data,
     # overlap between two empty lists equals 1, so we filter them out here
     dplyr::filter(!rlang::is_empty(.data$attr.x) |
                     !rlang::is_empty(.data$attr.y)) %>%
-    dplyr::group_by(!!id_column) %>%
+    dplyr::group_by(!!id_column_as_symbol) %>%
     dplyr::mutate(overlap_norm = sum(.data$overlap) /
                     ((dplyr::n_distinct(.data[[sx]])) *
                        (dplyr::n_distinct(.data[[sx]]) - 1)))
@@ -82,29 +79,42 @@ calculate_overlap <-
            id_column,
            subtype_column,
            na_name_rm = TRUE) {
-    id_column_symbol <- rlang::ensym(id_column)
+
+    att_quo_as_symbol <- rlang::ensym(att_column)
+    id_column_as_symbol <- rlang::ensym(id_column)
+
+    print("@@ top")
+    print(id_column)
+    print(id_column_as_symbol)
+
+
+    # sanity checks
+    check_input_data(data)
+    check_columns_exist(data, !!id_column_as_symbol, !!att_quo_as_symbol)
 
     overlap_df <-
       create_overlap_df(
         data = data,
         att_column = att_column,
-        id_column = id_column_symbol,
+        id_column = id_column,
         subtype_column = subtype_column,
         na_name_rm = na_name_rm
       )
 
     overlap_res <- overlap_df %>%
-      dplyr::select(!!id_column_symbol, overlap_norm) %>%
+      dplyr::select(!!id_column_as_symbol, overlap_norm) %>%
       unique()
     return(overlap_res)
   }
-
-# At this point, the final function doesn't work - I think it has to do with passing arguments
-# from the outside function to the inside one.
-
 
 # note for later:
 # str to symbol:   id_column_symbol <- rlang::ensym(id_column_as_string)
 # symbol to str:   id_column_as_string <- rlang::as_label(id_column_symbol)
 
-#
+# calculate_overlap(data = complexity_data, att_column = "Attributes", id_column = "ResponseId",
+# subtype_column = "Name", na_name_rm = TRUE)
+
+into_symbol <- function(value){
+  result <- if (typeof(value) != 'symbol') rlang::ensym(value)  else value
+  return (result)
+}

@@ -6,6 +6,11 @@ calculate_ol <- function(a1, a2) {
   return(overlap)
 }
 
+into_symbol <- function(value){
+  result <- if (typeof(value) != 'symbol') rlang::ensym(value)  else value
+  return (result)
+}
+
 #' @importFrom rlang .data
 create_overlap_df <- function(data,
                               att_column,
@@ -14,13 +19,13 @@ create_overlap_df <- function(data,
                               na_name_rm = TRUE) {
   . <- NULL
 
-  # creates a symbol from the string input
-  # (needed to use this column name in further operations)
+# creates a symbol from the string input
+# (needed to use this column name in further operations)
 
-  id_column_as_symbol <-  into_symbol(id_column)
-  att_column_as_symbol <-  into_symbol(att_column)
+id_column_as_symbol <-  into_symbol(id_column)
+att_column_as_symbol <-  into_symbol(att_column)
 
-  id_column_as_string <- rlang::as_label(id_column_as_symbol)
+id_column_as_string <- rlang::as_label(id_column_as_symbol)
 
   # labels for the subtype filter
   sx = paste0(subtype_column, ".x")
@@ -68,8 +73,8 @@ create_overlap_df <- function(data,
 #' @examples
 #' library(selfcomplexity)
 #' data(complexity_data, package = "selfcomplexity")
-# calculate_overlap(data = complexity_data, att_column = Attributes, id_column = ResponseId,
-# subtype_column = Name, na_name_rm = TRUE)
+# calculate_overlap(data = complexity_data, att_column = "Attributes", id_column = "ResponseId",
+# subtype_column = "Name", na_name_rm = TRUE)
 
 
 
@@ -82,11 +87,6 @@ calculate_overlap <-
 
     att_quo_as_symbol <- rlang::ensym(att_column)
     id_column_as_symbol <- rlang::ensym(id_column)
-
-    print("@@ top")
-    print(id_column)
-    print(id_column_as_symbol)
-
 
     # sanity checks
     check_input_data(data)
@@ -107,14 +107,6 @@ calculate_overlap <-
     return(overlap_res)
   }
 
-# note for later:
-# str to symbol:   id_column_symbol <- rlang::ensym(id_column_as_string)
-# symbol to str:   id_column_as_string <- rlang::as_label(id_column_symbol)
 
-# calculate_overlap(data = complexity_data, att_column = "Attributes", id_column = "ResponseId",
-# subtype_column = "Name", na_name_rm = TRUE)
 
-into_symbol <- function(value){
-  result <- if (typeof(value) != 'symbol') rlang::ensym(value)  else value
-  return (result)
-}
+

@@ -28,6 +28,7 @@ jobs:
       - name: Add dependencies
         run: |
           install.packages("remotes")
+          install.packages("tinytex")
           remotes::install_github("jumpingrivers/inteRgrate", auth_token = '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')
         shell: Rscript {0}
 

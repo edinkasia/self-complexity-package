@@ -6,9 +6,9 @@ calculate_ol <- function(a1, a2) {
   return(overlap)
 }
 
-into_symbol <- function(value){
-  result <- if (typeof(value) != 'symbol') rlang::ensym(value)  else value
-  return (result)
+into_symbol <- function(value) {
+  result <- if (typeof(value) != "symbol") rlang::ensym(value)  else value
+  return(result)
 }
 
 #' @importFrom rlang .data
@@ -28,12 +28,12 @@ att_column_as_symbol <-  into_symbol(att_column)
 id_column_as_string <- rlang::as_label(id_column_as_symbol)
 
   # labels for the subtype filter
-  sx = paste0(subtype_column, ".x")
-  sy = paste0(subtype_column, ".y")
+  sx <- paste0(subtype_column, ".x")
+  sy <- paste0(subtype_column, ".y")
 
   split_data <- data %>% {
     if (na_name_rm)
-      dplyr::filter(data,!is.na(data[[subtype_column]]))
+      dplyr::filter(data, !is.na(data[[subtype_column]]))
     else
       .
   } %>%
@@ -106,6 +106,3 @@ calculate_overlap <-
       unique()
     return(overlap_res)
   }
-
-
-

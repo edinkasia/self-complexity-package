@@ -35,6 +35,7 @@
 calculate_H <- #nolint
   function(data, att_column, id_column, vector) {
 
+  . <- NULL
   # creates a symbol from the string input
   # (needed to use this column name in further operations)
   id_col <- rlang::ensym(id_column)
@@ -69,7 +70,7 @@ calculate_H <- #nolint
     dplyr::count(.data$value) %>%
     dplyr::summarise(
       H_index = log2(length(vector)) -
-        (sum(n * log2(.data$n)) / length(vector))
+        (sum(.data$n * log2(.data$n)) / length(vector))
     )
 
   return(hashed_data)

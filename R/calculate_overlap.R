@@ -102,7 +102,7 @@ calculate_overlap <-
       )
 
     overlap_res <- overlap_df %>%
-      dplyr::select(!!id_column_as_symbol, overlap_norm) %>%
+      dplyr::select(!!id_column_as_symbol, .data$overlap_norm) %>%
       unique()
     return(overlap_res)
   }

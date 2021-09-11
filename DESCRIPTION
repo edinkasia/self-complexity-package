@@ -7,10 +7,10 @@ Authors@R:
            role = c("aut", "cre"),
            email = "kasia.banas@gmail.com",
            comment = c(ORCID = "0000-0002-2704-5087"))
-Description: Literature on self-complexity uses a variety of
-    indices to calculate how complex, or consistent, people's selves are.
-    This package offers functions that automate the calculation of the
-    most frequently used indices, including Overlap, H-index, etc.
+Description: Literature on self-complexity uses a variety of indices to
+    calculate how complex, or consistent, people's selves are.  This
+    package offers functions that automate the calculation of the most
+    frequently used indices, including Overlap, H-index, etc.
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5.0)

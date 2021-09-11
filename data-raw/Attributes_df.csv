@@ -1,0 +1,41 @@
+Attribute,Positive,Negative
+Capable,1,0
+Comfortable,1,0
+Communicative,1,0
+Confident,1,0
+Disagreeing,0,1
+Disorganised,0,1
+Energetic,1,0
+Friendly,1,0
+Fun and Entertaining,1,0
+Giving,1,0
+Happy,1,0
+Hardworking,1,0
+Hopeless,0,1
+Immature,0,1
+Incompetent,0,1
+Indecisive,0,1
+Independent,1,0
+Inferior,0,1
+Insecure,0,1
+Intelligent,1,0
+Interested,1,0
+Irresponsible,0,1
+Irritable,0,1
+Isolated,0,1
+Lazy,0,1
+Like a failure,0,1
+Lovable,1,0
+Mature,1,0
+Needed,1,0
+Optimistic,1,0
+Organised,1,0
+Outgoing,1,0
+Sad and Blue,0,1
+Self-centered,0,1
+Successful,1,0
+Tense,0,1
+Uncomfortable,0,1
+Unloved,0,1
+Weary,0,1
+Worthless,0,1

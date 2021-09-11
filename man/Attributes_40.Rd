@@ -12,7 +12,7 @@ This is a set of adjectives available to participants completing the Showers' ca
   A vector of 40 strings.
 }
 \source{
-Showers, C. (1992a). Compartmentalization of positive and negative
+Showers, C. (1992). Compartmentalization of positive and negative
 self-knowledge: Keeping bad apples out of the bunch. Journal of
 Personality and Social Psychology, 62, 1036-1049. https://doi.org/10.1037/0022-3514.62.6.1036
 }

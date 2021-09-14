@@ -35,22 +35,26 @@ calculate_phi <- function(data, att_column, id_column, pos_att_vector, neg_att_v
   att_column_as_symbol <- into_symbol(att_column)
 
   result <- data %>%
-    dplyr::rowwise %>%
-    dplyr::mutate(Pos_Attributes = sum(!!att_column_as_symbol %in% pos_att_vector),
-           Neg_Attributes = sum(!!att_column_as_symbol %in% neg_att_vector)) %>%
+    dplyr::mutate(attr = stringr::str_split(!!att_column_as_symbol, ",")) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(Pos_Attributes = sum(attr %in% pos_att_vector),
+           Neg_Attributes = sum(attr %in% neg_att_vector)) %>%
     dplyr::select(id_column_as_symbol, Pos_Attributes, Neg_Attributes) %>%
     dplyr::group_by(!!id_column_as_symbol) %>%
     tidyr::nest() %>%
-    dplyr::mutate(trans = purrr::map(data, ~t(.x)), # transpose the table into a 2-row format
+    dplyr::mutate(
+           # transpose the table into a 2-row format
+           trans = purrr::map(data, ~t(.x)),
            # add up all attributes used (with repeats)
            n_att = purrr::map_dbl(trans, ~sum(colSums(.x))),
            # calculate the chi squared
-           model = purrr::map(trans, ~stats::chisq.test(x = .x)),
+           # warning suppressed cos p values are not of interest, just chi squared
+           model = purrr::map(trans, ~suppressWarnings(stats::chisq.test(x = .x))),
            # pluck the chi squared statistic
            chi_sq = purrr::map_dbl(model, ~purrr::pluck(.x, 1)),
            # calculate phi as per formula
            phi = sqrt(chi_sq/n_att)) %>%
-    dplyr::select(id_column_as_symbol) %>%
+    dplyr::select(id_column_as_symbol, phi) %>%
     dplyr::ungroup()
 
   return(result)

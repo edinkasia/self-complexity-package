@@ -23,7 +23,7 @@ jobs:
       - name: Install Sys deps
         run: |
           sudo apt update
-          sudo apt install -y libcurl4-openssl-dev texlive
+          sudo apt install -y libcurl4-openssl-dev texlive texlive-fonts-extra
 
       - name: Add dependencies
         run: |

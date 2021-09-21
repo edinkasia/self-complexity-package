@@ -34,6 +34,6 @@ jobs:
 
       - name: Checks
         run: |
-          inteRgrate::check_all(tags = FALSE, file_permissions = FALSE)
+          inteRgrate::check_all(tag = FALSE, file_permissions = FALSE)
         shell: Rscript {0}
 

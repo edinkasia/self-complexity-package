@@ -37,7 +37,9 @@ Use the `calculate_overlap()` function to create a dataframe with overlap scores
 ```{r example}
 library(selfcomplexity)
 data(minimal_example, package = "selfcomplexity")
-overlap <- calculate_overlap(data = minimal_example, att_column = "Attributes", id_column = "ResponseId", subtype_column = "Subtype_name", na_name_rm = TRUE)
+overlap <- calculate_overlap(data = minimal_example, att_column = "Attributes",
+                             id_column = "ResponseId", subtype_column = "Subtype_name",
+                             na_name_rm = TRUE)
 head(overlap)
 ```
 

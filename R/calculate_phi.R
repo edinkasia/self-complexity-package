@@ -53,7 +53,7 @@ calculate_phi <- function(data, att_column, id_column, pos_att_vector, neg_att_v
            # pluck the chi squared statistic
            chi_sq = purrr::map_dbl(.data$model, ~purrr::pluck(.x, 1)),
            # calculate phi as per formula
-           phi = sqrt(.data$chi_sq/.data$n_att)) %>%
+           phi = sqrt(.data$chi_sq / .data$n_att)) %>%
     dplyr::select(id_column_as_symbol, .data$phi) %>%
     dplyr::ungroup()
 

@@ -31,7 +31,9 @@ overlap scores for an example dataset:
 ``` r
 library(selfcomplexity)
 data(minimal_example, package = "selfcomplexity")
-overlap <- calculate_overlap(data = minimal_example, att_column = "Attributes", id_column = "ResponseId", subtype_column = "Subtype_name", na_name_rm = TRUE)
+overlap <- calculate_overlap(data = minimal_example, att_column = "Attributes",
+                             id_column = "ResponseId", subtype_column = "Subtype_name",
+                             na_name_rm = TRUE)
 head(overlap)
 #> # A tibble: 1 × 2
 #> # Groups:   ResponseId [1]

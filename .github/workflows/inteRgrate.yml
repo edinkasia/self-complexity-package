@@ -23,7 +23,7 @@ jobs:
       - name: Install Sys deps
         run: |
           sudo apt update
-          sudo apt install -y libcurl4-openssl-dev
+          sudo apt install -y libcurl4-openssl-dev texlive texlive-fonts-extra
 
       - name: Add dependencies
         run: |
@@ -34,6 +34,6 @@ jobs:
 
       - name: Checks
         run: |
-          inteRgrate::check_all()
+          inteRgrate::check_all(tag = FALSE, file_permissions = FALSE)
         shell: Rscript {0}
 

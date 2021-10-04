@@ -6,11 +6,6 @@ calculate_ol <- function(a1, a2) {
   return(overlap)
 }
 
-into_symbol <- function(value) {
-  result <- if (typeof(value) != "symbol") rlang::ensym(value)  else value
-  return(result)
-}
-
 #' @importFrom rlang .data
 create_overlap_df <- function(data,
                               att_column,

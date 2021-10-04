@@ -26,11 +26,6 @@
 
 calculate_phi <- function(data, att_column, id_column, pos_att_vector, neg_att_vector) {
 
-  into_symbol <- function(value) {
-    result <- if (typeof(value) != "symbol") rlang::ensym(value)  else value
-    return(result)
-  }
-
   id_column_as_symbol <- into_symbol(id_column)
   att_column_as_symbol <- into_symbol(att_column)
 
@@ -47,13 +42,16 @@ calculate_phi <- function(data, att_column, id_column, pos_att_vector, neg_att_v
            trans = purrr::map(data, ~t(.x)),
            # add up all attributes used (with repeats)
            n_att = purrr::map_dbl(.data$trans, ~sum(colSums(.x))),
+           n_by_val = purrr::map(data, ~colSums(.x)),
+           # flag up rows with <3 neg or pos attributes
+           warning_needed = purrr::map(.data$n_by_val, ~check_for_low_values(.x)),
            # calculate the chi squared
-           # warning suppressed cos p values are not of interest, just chi squared
+           # warning suppressed as p values are not of interest, just chi squared
            model = purrr::map(.data$trans, ~suppressWarnings(stats::chisq.test(x = .x))),
            # pluck the chi squared statistic
            chi_sq = purrr::map_dbl(.data$model, ~purrr::pluck(.x, 1)),
-           # calculate phi as per formula
-           phi = sqrt(.data$chi_sq / .data$n_att)) %>%
+           # calculate phi as per formula (NA if conditions not met)
+           phi = ifelse(.data$warning_needed == 0, sqrt(.data$chi_sq / .data$n_att), NA)) %>%
     dplyr::select(id_column_as_symbol, .data$phi) %>%
     dplyr::ungroup()
 

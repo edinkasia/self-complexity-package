@@ -40,10 +40,9 @@ check_columns_exist <- function(data, ...) {
 #' @param my_list a list or vector
 #' @example
 #' check_for_low_values(c(2, 3, 4))
-check_for_low_values <- function(my_list){
+check_for_low_values <- function(my_list) {
   low_nums <- c(0, 1, 2)
   result <- ifelse(length(intersect(my_list, low_nums)) == 0,
                    0, 1)
   return(result)
 }
-

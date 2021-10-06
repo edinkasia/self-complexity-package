@@ -1,5 +1,5 @@
 Package: selfcomplexity
-Title: Calculate Indices for Self-complexity Measures
+Title: Calculate Indices for Self-Complexity Measures
 Version: 0.0.3
 Authors@R: 
     person("Kasia", "Banas", , "kasia.banas@gmail.com", role = c("aut", "cre"),

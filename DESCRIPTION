@@ -2,10 +2,7 @@ Package: selfcomplexity
 Title: Calculate Indices for Self-complexity Measures
 Version: 0.0.3
 Authors@R: 
-    person(given = "Kasia",
-           family = "Banas",
-           role = c("aut", "cre"),
-           email = "kasia.banas@gmail.com",
+    person("Kasia", "Banas", , "kasia.banas@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-2704-5087"))
 Description: Literature on self-complexity uses a variety of indices to
     calculate how complex, or consistent, people's selves are.  This

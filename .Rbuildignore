@@ -6,3 +6,5 @@
 ^NEWS\.md$
 ^\.github
 ^\.github$
+^\.vscode
+^data-raw$

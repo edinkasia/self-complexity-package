@@ -50,3 +50,4 @@ po/*~
 test_data/
 ## ignore paper drafts
 paper_drafts/
+inst/doc

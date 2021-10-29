@@ -2,7 +2,7 @@ Package: selfcomplexity
 Title: Calculate Indices for Self-Complexity Measures
 Version: 0.0.4
 Authors@R: 
-    person(given = "Kasia",
+    person(given = c("Kasia"),
            family = "Banas",
            role = c("aut", "cre"),
            email = "kasia.banas@gmail.com",
@@ -31,4 +31,4 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

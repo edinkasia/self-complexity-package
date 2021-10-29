@@ -1,11 +1,8 @@
 Package: selfcomplexity
 Title: Calculate Indices for Self-Complexity Measures
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: 
-    person(given = c("Kasia"),
-           family = "Banas",
-           role = c("aut", "cre"),
-           email = "kasia.banas@gmail.com",
+    person("Kasia", "Banas", , "kasia.banas@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-2704-5087"))
 Description: Literature on self-complexity uses a variety of indices to
     calculate how complex, or consistent, people's selves are.  This
@@ -28,6 +25,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

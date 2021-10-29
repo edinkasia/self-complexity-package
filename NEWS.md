@@ -1,3 +1,7 @@
+# selfcomplexity 0.0.5 _2021-10-29_
+
+  * Update the formatting of DESCRIPTION
+
 # selfcomplexity 0.0.4 _2021-10-29_
 
   * Ensure all data sets are documented

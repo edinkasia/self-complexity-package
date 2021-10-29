@@ -1,3 +1,8 @@
+# selfcomplexity 0.0.4 _2021-10-29_
+
+  * Ensure all data sets are documented
+  * Include a function for calculating Phi
+
 # selfcomplexity 0.0.3 _2021-08-20_
 
   * Update args for `calculate_H` such that both can be used

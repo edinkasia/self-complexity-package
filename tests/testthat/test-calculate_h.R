@@ -1,9 +1,9 @@
 
-data("Showers_onesort", package = "selfcomplexity")
-data("Attributes_40", package = "selfcomplexity")
+data("showers_onesort", package = "selfcomplexity")
+data("attributes_40", package = "selfcomplexity")
 
 test_that("Calculate H gives correct answer", {
-  res <- calculate_H(Showers_onesort, "Attributes", "ResponseId", Attributes_40)
+  res <- calculate_H(showers_onesort, "Attributes", "ResponseId", attributes_40)
   # ensure that there is only one result as expected
   expect_length(res$H_index, 1)
   # ensure the calculated result matches published value

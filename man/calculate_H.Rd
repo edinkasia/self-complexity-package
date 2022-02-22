@@ -44,6 +44,6 @@ comma separated, character value of multiple adjectives, e.g
 \examples{
 library(selfcomplexity)
 data(complexity_data, package = "selfcomplexity")
-data(Attributes_40, package = "selfcomplexity")
-calculate_H(complexity_data, Attributes, ResponseId, Attributes_40)
+data(attributes_40, package = "selfcomplexity")
+calculate_H(complexity_data, Attributes, ResponseId, attributes_40)
 }

@@ -1,5 +1,5 @@
-\name{Showers_onesort}
-\alias{Showers_onesort}
+\name{showers_onesort}
+\alias{showers_onesort}
 \docType{data}
 \title{
 Results of the Showers card sort task for a single participant.
@@ -7,7 +7,7 @@ Results of the Showers card sort task for a single participant.
 \description{
 This dataset contains the results of the Showers card sort task for a single participant. The example comes from Showers, Abramson and Hogan (1998). The original paper contains some self-complexity indices for this example (Phi, proportion positive, proportion negative), and additional ones (e.g. H) are reported in Showers & Zeiger-Hill (2003).
 }
-\usage{data("Showers_onesort")}
+\usage{data("showers_onesort")}
 \format{
   A data frame with 11 observations on the following 3 variables.
   \describe{

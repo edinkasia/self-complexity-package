@@ -1,14 +1,14 @@
 
 data("complexity_data", package = "selfcomplexity")
-data("Attributes_df", package = "selfcomplexity")
+data("attributes_df", package = "selfcomplexity")
 
 test_that("Calculate Phi gives correct answer", {
   data_phi <- complexity_data %>%
     dplyr::filter(ResponseId == "R_2wmF4JXKNx6McGd")
-  neg <- Attributes_df %>%
+  neg <- attributes_df %>%
     dplyr::filter(Negative == 1) %>%
     dplyr::pull(Attribute)
-  pos <- Attributes_df %>%
+  pos <- attributes_df %>%
     dplyr::filter(Positive == 1) %>%
     dplyr::pull(Attribute)
   res <- calculate_phi(data = data_phi, att_column = "Attributes",

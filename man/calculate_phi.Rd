@@ -27,12 +27,12 @@ Calculate phi index
 }
 \examples{
 library(selfcomplexity)
-data(Showers_onesort, package = "selfcomplexity")
-data(Attributes_df, package = "selfcomplexity")
-pos <- Attributes_df \%>\%
+data(showers_onesort, package = "selfcomplexity")
+data(attributes_df, package = "selfcomplexity")
+pos <- attributes_df \%>\%
 dplyr::filter(Positive == 1) \%>\%
 dplyr::pull(Attribute)
-neg <- Attributes_df \%>\%
+neg <- attributes_df \%>\%
 dplyr::filter(Negative == 1) \%>\%
 dplyr::pull(Attribute)
 }

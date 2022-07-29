@@ -1,0 +1,145 @@
+---
+title: "selfcomplexity"
+output: rmarkdown::html_vignette
+description: >
+  This file describes the functions provided by selfcomplexity and the example 
+  datasets available in the package.
+vignette: >
+  %\VignetteIndexEntry{selfcomplexity}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(selfcomplexity)
+```
+
+Researchers interested in the structure of the self-concept often use the Showers
+card sort task, where they ask participants to list their self-aspects and then
+identify attributes that describe each aspect of their self. The outcome of the
+card sort is then used as a basis to calculate various indices that quantify 
+the structure of the self. This package has been built to help researchers 
+calculate these indices.
+
+## Data: minimal_example
+
+To show a very simple example of the data structure used by selfcomplexity, we
+have prepared `minimal_example` - a small dataset that represents the results of 
+a card sort task for one participant with three self-aspects. 
+
+```{r}
+dim(minimal_example)
+minimal_example
+```
+
+Note that the first column corresponds to the participant's unique ID, which is
+the same in all three rows - we have the card sort from a single participant.
+The second column corresponds to the name of the self-aspect - we've got three
+different ones here. And the third column gives us the attributes that were listed
+with each self-aspect, separated by commas. 
+
+This long data format is expected by all functions in the package - each row
+should correspond to one self-aspect.
+
+## Calculating overlap
+
+The `calculate_overlap` function allows to calculate the overlap index (Rafaeli-Mor et al.,
+1999). This index is calculated pairwise - for each pair of aspects, we look
+at the number of attributes that they share, and we then sum those across all
+pairs and scale for the number of aspects in that participant's card sort. The
+mathematical formula is as follows:
+
+$$OL = \frac{\sum_i(\frac{\sum_jC{ij}}{T{j}})}{n(n-1)}$$
+
+where C is the number of attributes common to the two aspects, T is the total 
+number of attributes in the referent aspect, n is the total number of aspects 
+in the individual’s trait-sort and i and j vary from 0 to n.
+
+The `calculate_overlap` function call requires 5 arguments: the data frame with
+the card sort data, the name of the column containing attributes, the name of the
+column containing unique IDs, the name of the column containing subtype names,
+and whether or not rows with missing subtype names should be removed. The output
+is a tibble containing the unique IDs and an overlap index corresponding to each
+of those unique IDs. 
+
+```{r}
+data(minimal_example, package = "selfcomplexity")
+overlap <- calculate_overlap(data = minimal_example, att_column = "Attributes",
+                             id_column = "ResponseId", subtype_column = "Subtype_name",
+                             na_name_rm = TRUE)
+overlap
+```
+
+## Calculating the H statistic
+
+The `calculate_H` function allows to calculate the Linville's (1987) dimensionality
+statistic, where a higher score indicates higher complexity. This approach
+uses the Scott dimensionality formula (1969):
+
+$$H = \log_{2}(n) - \frac{\sum_{i}n_{i}\log_{2}(n_{i})}{n}$$
+
+where n is the total number of attributes, and $n_i$ is the number of attributes 
+that appear in a particular combination in the descriptions of self-aspects. 
+
+The `calculate_H` function call requires 4 arguments: the data frame with
+the card sort data, the name of the column containing attributes, the name of the
+column containing unique IDs, and a vector containing all attributes that were
+made available to the participant during the card sort task. The output
+is a tibble containing the unique IDs and an H statistic corresponding to each
+of those unique IDs. 
+
+```{r}
+data(minimal_example, package = "selfcomplexity") # loads the data
+data(Attributes_40, package = "selfcomplexity") # loads the vector of attributes
+calculate_H(minimal_example, Attributes, ResponseId, Attributes_40)
+```
+
+## Calculating the Phi statistics
+
+Phi is based on a chi‐squared statistic and provides an index of the extent to 
+which the distribution of positive and negative traits across self‐aspect groups 
+deviates from what would be expected on the basis of chance. 
+
+The `calculate_phi` function call requires 5 arguments: the data frame with
+the card sort data, the name of the column containing attributes, the name of the
+column containing unique IDs, a vector containing all positive attributes that were
+made available to the participant during the card sort task, and a vector 
+containing all negative attributes that were made available to the participant 
+during the card sort task. The output is a tibble containing the unique IDs and 
+a phi statistic corresponding to each of those unique IDs. 
+
+The `selfcomplexity` package includes `Attributes_df`, which is a data frame of 
+40 attributes often used with the Showers card sort task, and an indication of 
+which of those attributes are positive and negative. This data frame can be used
+as a basis for extracting the set of positive and negative attributes
+
+```{r}
+# preparing the attribute sets
+data(Attributes_df, package = "selfcomplexity")
+
+pos <- Attributes_df %>%
+dplyr::filter(Positive == 1) %>%
+dplyr::pull(Attribute)
+
+neg <- Attributes_df %>%
+dplyr::filter(Negative == 1) %>%
+dplyr::pull(Attribute)
+
+# creating a data frame for the example
+# minimal_example only contains positive attributes, and thus produces an NA
+# Let's look at a different example instead
+
+phi_data <- complexity_data[complexity_data$ResponseId == "R_2wmF4JXKNx6McGd",] 
+
+# function call
+calculate_phi(data = phi_data, att_column = "Attributes", id_column = "ResponseId", 
+              pos_att_vector = pos, neg_att_vector = neg)
+```
+
